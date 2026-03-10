@@ -1,0 +1,36 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/css.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <script src="/js/admin.js" defer></script>
+  <title>админка</title>
+</head>
+<body>
+  <div class="admin-wrap">
+    <div class="admin-header">
+      <h1 class="admin-title">Заявки</h1>
+      <div id="status" class="admin-status">Загрузка...</div>
+    </div>
+
+    <table class="admin-table" aria-describedby="status">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Создано</th>
+          <th>ФИО</th>
+          <th>Почта</th>
+          <th>Адрес</th>
+          <th>Описание</th>
+          <th>Статус</th>
+        </tr>
+      </thead>
+      <tbody id="requests-body"></tbody>
+    </table>
+
+    <div id="empty" class="empty-state" hidden>Заявок пока нет.</div>
+  </div>
+</body>
+</html>
