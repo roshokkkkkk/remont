@@ -221,11 +221,6 @@ a:hover{
     margin-bottom: 30px;
 }
 
-.remont-row2{
-    display: flex;
-    margin-bottom: 30px;
-}
-
 .item-remont{
     height: 250px;
     width: 250px;
@@ -238,7 +233,6 @@ a:hover{
     width: 250px;
     border: 3px solid #f68903;
 }
-
 .btn-photo{
     width: 250px;
     height: 40px;
@@ -260,6 +254,12 @@ a:hover{
     color: white;
     cursor: pointer;
     transition: 0.5s;
+}
+
+@media (max-width: 1119px){
+    .image-remont .remont-wrp:nth-child(even){
+        display: none;
+    }
 }
 
 .main-description{
@@ -418,7 +418,7 @@ a:hover{
     .expertise-block:nth-child(-n+4) {
         border-bottom: 1px solid #ebebeb;
     }
-    .expertise-block:nth-child(2n) {
+    .expertise-block {
         border-right: 0;
     }
 }
@@ -456,20 +456,98 @@ a:hover{
     align-items: center;
 }
 
-.our-works-wrp {
-    display: flex;
+.our-works-slider{
+    --work-card-width: clamp(210px, 28vw, 300px);
+    --work-gap: 20px;
+    width: min(1000px, 100%);
+    margin: 0 auto 40px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "prev viewport next";
+    align-items: center;
+    gap: 10px;
 }
 
-.our-works-wrp2 {
+.our-works-prev{
+    grid-area: prev;
+}
+
+.our-works-next{
+    grid-area: next;
+}
+
+.our-works-wrp{
+    grid-area: viewport;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.our-works-wrp::-webkit-scrollbar{
+    display: none;
+}
+
+.our-works-track{
     display: flex;
-    padding-bottom: 30px;
+    gap: var(--work-gap);
+    width: max-content;
+}
+
+.our-works-wrp-item{
+    flex: 0 0 var(--work-card-width);
+    scroll-snap-align: start;
+    aspect-ratio: 4 / 5;
+}
+
+.our-works-nav{
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+
+.our-works-nav-icon{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    color: #FF8C00;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.our-works-nav:hover .our-works-nav-icon{
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+.our-works-nav:disabled{
+    opacity: 0.4;
+    cursor: default;
 }
 
 .var-rem{
-    display: flex;
-    width: 250px;
-    height: 250px;
+    display: block;
+    width: 100%;
+    height: 100%;
     border: 2px solid #000000;
+    object-fit: cover;
+}
+
+@media (max-width: 600px){
+    .our-works-slider{
+        grid-template-areas:
+            "viewport"
+            "prev"
+            "next";
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 12px;
+    }
 }
 
 .quote-section{

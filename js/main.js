@@ -8,6 +8,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function initWorksSliders() {
+    const sliders = document.querySelectorAll('.our-works-slider');
+    sliders.forEach((slider) => {
+      const viewport = slider.querySelector('.our-works-wrp');
+      const track = slider.querySelector('.our-works-track');
+      const prev = slider.querySelector('.our-works-prev');
+      const next = slider.querySelector('.our-works-next');
+
+      if (!viewport || !track || !prev || !next) {
+        return;
+      }
+
+      let step = 0;
+
+      const computeStep = () => {
+        const firstItem = track.querySelector('.our-works-wrp-item');
+        if (!firstItem) {
+          step = 0;
+          return;
+        }
+
+        const styles = window.getComputedStyle(track);
+        const gapValue = styles.gap || styles.columnGap || '0px';
+        const gap = Number.parseFloat(gapValue) || 0;
+        step = firstItem.getBoundingClientRect().width + gap;
+      };
+
+      const updateButtons = () => {
+        const maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
+        prev.disabled = viewport.scrollLeft <= 1;
+        next.disabled = viewport.scrollLeft >= maxScrollLeft - 1;
+      };
+
+      const scrollByStep = (direction) => {
+        if (!step) {
+          computeStep();
+        }
+        viewport.scrollBy({ left: direction * step, behavior: 'smooth' });
+      };
+
+      prev.addEventListener('click', () => scrollByStep(-1));
+      next.addEventListener('click', () => scrollByStep(1));
+
+      viewport.addEventListener('scroll', () => {
+        window.requestAnimationFrame(updateButtons);
+      });
+
+      window.addEventListener('resize', () => {
+        computeStep();
+        updateButtons();
+      });
+
+      computeStep();
+      updateButtons();
+    });
+  }
+
+  initWorksSliders();
+
   const form = document.getElementById('repair-form');
   const status = document.getElementById('repair-form-status');
   const submitButton = document.getElementById('repair-submit');
@@ -39,11 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  if (!form || !submitButton) {
-    return;
-  }
-
-  form.addEventListener('submit', async (event) => {
+  if (form && submitButton) {
+    form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const payload = {
@@ -86,5 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } finally {
       submitButton.disabled = false;
     }
-  });
+    });
+  }
 });
