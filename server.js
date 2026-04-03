@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const mysql = require('mysql2/promise');
 const path = require('path');
 require('dotenv').config();
@@ -108,10 +108,10 @@ app.put('/api/requests/:id/status', async (req, res) => {
   }
 });
 
-const pageRoutes = ['main', 'about', 'team', 'works', 'review', 'contacts', 'admin'];
+const pageRoutes = ['index', 'about', 'team', 'works', 'review', 'contacts', 'admin'];
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(pagesDir, 'main.html'));
+  res.sendFile(path.join(pagesDir, 'index.html'));
 });
 
 for (const page of pageRoutes) {
@@ -126,3 +126,4 @@ const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
+

@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       console.error(error);
       setStatus(
-        'Нет соединения с API. Откройте сайт через http://localhost:3000/main.html и проверьте npm start.',
+        'Нет соединения с API. Откройте сайт через http://localhost:3000/index.html и проверьте npm start.',
         'error'
       );
     } finally {
@@ -145,3 +145,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
