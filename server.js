@@ -108,10 +108,14 @@ app.put('/api/requests/:id/status', async (req, res) => {
   }
 });
 
-const pageRoutes = ['index', 'about', 'team', 'works', 'review', 'contacts', 'admin'];
+const pageRoutes = ['about', 'team', 'works', 'review', 'contacts', 'admin'];
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(pagesDir, 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/index.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 for (const page of pageRoutes) {
