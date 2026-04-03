@@ -1,0 +1,31 @@
+@font-face {
+    src: url(/fonts/HammersmithOne-Regular.ttf);
+    font-family: HammersmithOne;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-image: url(/img/fons/overlay3.png);
+}
+
+h1{
+    font-family: HammersmithOne;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+p{
+    font-family: HammersmithOne;
+    font-weight: 200;
+    line-height: 20px;
+    font-size: 20px;
+    line-height: 20px;
+    text-indent: 25px;
+    padding: 0 30px;
+    text-align: justify;
+}
