@@ -29,13 +29,23 @@ p{
     padding: 0 80px;
     text-align: justify;
 }
+
+.wrp-img{
+  display: flex;
+  justify-content: space-around;
+}
+
+.wrp{
+  display: flex;
+}
+
 img{
-    display: flex;
     margin: 0 auto;
     width: 300px;
     height: 300px;
     border-radius: 10px;
     margin-top: 80px;
+    margin-bottom: 50px;
 }
 
 
@@ -48,17 +58,5 @@ img {
     width: 300px;
     animation: rotateImg 3s linear infinite; 
   }
-
-/*
-
-  img {
-    width: 300px;
-    transition: transform 0.5s ease; 
-  }
-  
-  img:hover {
-    transform: scale(1.2);
-  }
-*/
 
 
