@@ -185,3 +185,16 @@ li:hover{
 .spisok li a.active {
     color: #d6820c;
 }
+
+.button{
+    display: inline-block;
+    padding: 15px;
+    position: absolute;
+    margin-left: 92.9%;
+    border: 1px solid #FF8C00;
+    color: #FF8C00;
+    text-transform: uppercase;
+    font-family: HammersmithOne;
+    font-size: 16px;
+    border-radius: 2px;  
+}
