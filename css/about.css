@@ -6,11 +6,11 @@
 *{
     box-sizing: border-box;
 }
-
+/*
 body{
     background-image: url(/img/fons/overlay3.png);
 }
-
+*/
 h1{
     font-family: HammersmithOne;
     font-weight: bold;
@@ -26,7 +26,7 @@ p{
     font-size: 20px;
     line-height: 20px;
     text-indent: 25px;
-    padding: 0 30px;
+    padding: 0 80px;
     text-align: justify;
 }
 img{
@@ -34,4 +34,31 @@ img{
     margin: 0 auto;
     width: 300px;
     height: 300px;
+    border-radius: 10px;
+    margin-top: 80px;
 }
+
+
+@keyframes rotateImg {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+img {
+    width: 300px;
+    animation: rotateImg 3s linear infinite; 
+  }
+
+/*
+
+  img {
+    width: 300px;
+    transition: transform 0.5s ease; 
+  }
+  
+  img:hover {
+    transform: scale(1.2);
+  }
+*/
+
+
