@@ -233,6 +233,7 @@ a:hover{
     width: 250px;
     border: 3px solid #f68903;
 }
+
 .btn-photo{
     width: 250px;
     height: 40px;
@@ -247,6 +248,23 @@ a:hover{
     font-family: HammersmithOne;
     font-size: 16px;
     border-radius: 2px;
+}
+
+/*для авторизации*/
+.wrp-avt{
+    display: flex;
+    justify-content: right;
+    margin-right: 30px;
+}
+
+.btn-photo.btn-avt{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 100px;
+    text-align: center;
+    position: absolute;
 }
 
 .btn-photo:hover{
@@ -598,6 +616,7 @@ a:hover{
 .quote-img:hover{
     width: 70px;
     height: 70px;
+    border-radius: 35px;
     transition: 0.5s;
 }
 .quote-img-wrp{
