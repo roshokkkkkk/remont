@@ -1,0 +1,120 @@
+*{
+    box-sizing: border-box;
+}
+.header-reg{
+    background-image: url(/img/fons/overlay3.png), url(/img/fons/header.png);
+    background-size: cover;
+     
+}
+
+.title-header{
+    display: flex;
+    align-items: center;
+    margin: 5px 5px;
+    
+}
+
+.title-reg{
+    display: flex;
+    align-items: center;
+    color: #4d4c4c;
+    margin-left: 10px;
+}
+
+.img-logo{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.form-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    
+}
+
+.form-reg-wrp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1eeee7d;
+    width: 500px;
+    height: 650px;
+    border-radius: 10px;
+    border: 3px solid #FF8C00;
+    margin-bottom: 200px;
+}
+
+.registr{
+    display: flex;
+    flex-direction: column;  
+}
+
+.text-reg{
+    text-align: center;
+}
+
+.name-input{
+    margin-bottom: 10px;
+    text-align: start;
+}
+
+.input-reg{
+    margin-bottom: 30px;
+    width: 350px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.btn-reg{
+    display: flex;
+    background: #9ecfed;
+    width: 200px;
+    height: 30px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #8b8686;
+    cursor: pointer;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.avt{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.ssylka{
+    margin-left: 5px;
+    text-decoration: none;
+    color: #FF8C00;
+}
+
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border: 1px solid #FF8C00;
+    background-color: #ffffff00;
+    color: #FF8C00;
+    text-transform: uppercase;
+    font-family: HammersmithOne;
+    font-size: 16px;
+    border-radius: 2px; 
+    height: 40px;
+}
+
+.button:hover {
+    background-color: #ff8c00aa;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.5s;
+}

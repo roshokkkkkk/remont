@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="/css/reg.css">
+</head>
+<body>
+    <div class="header-reg">
+        <div class="title-header">
+            <img src="/img/icons/icon.png" alt="Логотип" class="img-logo">
+            <h1 class="title-reg">Корочки.есть</h1>
+        </div>
+        <div class="form-wrapper">
+            <div class="form-reg-wrp">
+                <form class="registr" id="registrationForm">
+                    <h1 class="text-reg">Регистрация</h1>
+                    <label class="name-input">Логин</label>
+                    <input type="text" placeholder="Введите логин" class="input-reg" id="loginReg">
+                    <label class="name-input">Пароль</label>
+                    <input type="password" placeholder="Введите пароль" class="input-reg" id="passReg">
+                    <label class="name-input">ФИО</label>
+                    <input type="text" placeholder="Введите ФИО" class="input-reg" id="fioReg">
+                    <label class="name-input">Телефон</label>
+                    <input type="tel" placeholder="Введите номер телефона" class="input-reg" id="phoneReg">
+                    <label class="name-input">Электронная почта</label>
+                    <input type="email" placeholder="Введите адрес электронной почты" class="input-reg" id="emailReg">
+                    <button type="button" class="button" onclick="validateAndSubmit()">Создать пользователя</button>
+                    <div class="avt">
+                        <p class="nn">Уже зарегистрированы?</p>
+                        <a class="ssylka" href="/pages/avtoriz/vhod.html">Войти</a>         
+                    </div>                    
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateAndSubmit() {
+            const login = document.getElementById('loginReg').value.trim();
+            const password = document.getElementById('passReg').value.trim();
+            const fio = document.getElementById('fioReg').value.trim();
+            const phone = document.getElementById('phoneReg').value.trim();
+            const email = document.getElementById('emailReg').value.trim();
+            if (!login || !password || !fio || !phone || !email) {
+                alert('Заполните все поля!');
+                return;
+            }
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert('Введите корректный адрес электронной почты.');
+                return;
+            }
+            window.location.href = "index.zayvki.html";
+        }
+    </script>
+</body>
+</html>

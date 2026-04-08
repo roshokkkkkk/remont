@@ -1,39 +1,72 @@
-﻿const statusEl = document.getElementById('status');
-const bodyEl = document.getElementById('requests-body');
-const emptyEl = document.getElementById('empty');
+// Типы данных
+interface RequestRow {
+  id: string | number;
+  created_at: string | number | Date;
+  full_name: string;
+  email: string;
+  address: string;
+  details: string;
+  status: string;
+}
+
+interface StatusOption {
+  value: string;
+  label: string;
+  className: string;
+}
+
+interface ApiResponse {
+  data?: RequestRow[];
+  message?: string;
+  [key: string]: unknown;
+}
+
+// Константы с типизацией
+const statusEl = document.getElementById('status') as HTMLElement | null;
+const bodyEl = document.getElementById('requests-body') as HTMLTableSectionElement | null;
+const emptyEl = document.getElementById('empty') as HTMLElement | null;
+
 const formatter = new Intl.DateTimeFormat('ru-RU', {
   dateStyle: 'medium',
   timeStyle: 'short',
 });
 
-const STATUS_OPTIONS = [
+const STATUS_OPTIONS: readonly StatusOption[] = [
   { value: 'new', label: 'новое', className: 'status-new' },
   { value: 'viewed', label: 'просмотрено', className: 'status-viewed' },
   { value: 'in_work', label: 'в работе', className: 'status-in-work' },
   { value: 'ready', label: 'готово', className: 'status-ready' },
 ];
 
-const STATUS_CLASS_MAP = new Map(STATUS_OPTIONS.map((item) => [item.value, item.className]));
-const LEGACY_STATUS_MAP = new Map([
+// Создаём Map с явной типизацией
+const STATUS_CLASS_MAP = new Map<string, string>(
+  STATUS_OPTIONS.map((item): [string, string] => [item.value, item.className])
+);
+
+const LEGACY_STATUS_MAP = new Map<string, string>([
   ['in_progress', 'in_work'],
   ['done', 'ready'],
   ['cancelled', 'new'],
 ]);
 
-function formatDate(value) {
+// Вспомогательные функции
+function formatDate(value: string | number | Date | null | undefined): string {
   if (!value) return '-';
+  
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return String(value);
+  
   return formatter.format(date);
 }
 
-function normalizeStatus(value) {
+function normalizeStatus(value: string | null | undefined): string {
   if (!value) return 'new';
   if (STATUS_CLASS_MAP.has(value)) return value;
-  return LEGACY_STATUS_MAP.get(value) || 'new';
+  const legacy = LEGACY_STATUS_MAP.get(value);
+  return legacy ?? 'new';
 }
 
-function applySelectClass(select, statusValue) {
+function applySelectClass(select: HTMLSelectElement, statusValue: string): void {
   for (const className of STATUS_CLASS_MAP.values()) {
     select.classList.remove(className);
   }
@@ -43,21 +76,23 @@ function applySelectClass(select, statusValue) {
   }
 }
 
-async function updateStatus(id, status) {
-  const response = await fetch(`/api/requests/${id}/status`, {
+// API-функции
+async function updateStatus(id: string | number, status: string): Promise<void> {
+  const response = await fetch(`/api/requests/${String(id)}/status`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ status }),
   });
 
   if (!response.ok) {
-    const payload = await response.json().catch(() => ({}));
+    const payload: ApiResponse = await response.json().catch((): ApiResponse => ({}));
     const message = payload.message || `HTTP ${response.status}`;
     throw new Error(message);
   }
 }
 
-function createStatusSelect(row) {
+// Создание селекта статуса
+function createStatusSelect(row: RequestRow): HTMLSelectElement {
   const select = document.createElement('select');
   select.className = 'status-select';
 
@@ -72,38 +107,45 @@ function createStatusSelect(row) {
   select.value = normalized;
   applySelectClass(select, normalized);
 
-  select.addEventListener('change', async () => {
+  select.addEventListener('change', async (event: Event): Promise<void> => {
+    const target = event.target as HTMLSelectElement | null;
+    if (!target) return;
+    
     const previous = normalizeStatus(row.status);
-    const next = select.value;
+    const next = target.value;
 
-    select.disabled = true;
-    applySelectClass(select, next);
+    target.disabled = true;
+    applySelectClass(target, next);
 
     try {
       await updateStatus(row.id, next);
       row.status = next;
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
-      select.value = normalizeStatus(previous);
-      applySelectClass(select, normalizeStatus(previous));
+      target.value = normalizeStatus(previous);
+      applySelectClass(target, normalizeStatus(previous));
       if (statusEl) {
         statusEl.textContent = 'Ошибка обновления статуса.';
       }
     } finally {
-      select.disabled = false;
+      target.disabled = false;
     }
   });
 
   return select;
 }
 
-function renderRows(rows) {
+// Рендеринг строк таблицы
+function renderRows(rows: readonly RequestRow[]): void {
+  if (!bodyEl) return;
+  
   bodyEl.innerHTML = '';
+  
   for (const row of rows) {
     const tr = document.createElement('tr');
 
     const tdId = document.createElement('td');
-    tdId.textContent = row.id ?? '';
+    tdId.textContent = String(row.id ?? '');
 
     const tdDate = document.createElement('td');
     tdDate.textContent = formatDate(row.created_at);
@@ -137,30 +179,45 @@ function renderRows(rows) {
   }
 }
 
-async function loadRequests() {
+// Загрузка данных
+async function loadRequests(): Promise<void> {
   if (statusEl) {
     statusEl.textContent = 'Загрузка...';
   }
+  
   try {
     const response = await fetch('/api/requests', { cache: 'no-store' });
+    
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
-    const payload = await response.json();
-    const rows = Array.isArray(payload.data) ? payload.data : [];
+    
+    const payload: ApiResponse = await response.json();
+    const rows: RequestRow[] = Array.isArray(payload.data) ? payload.data : [];
+    
     renderRows(rows);
-    emptyEl.hidden = rows.length > 0;
+    
+    if (emptyEl) {
+      emptyEl.hidden = rows.length > 0;
+    }
+    
     if (statusEl) {
       statusEl.textContent = `Всего: ${rows.length}`;
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error(error);
-    emptyEl.hidden = false;
-    bodyEl.innerHTML = '';
+    
+    if (emptyEl) {
+      emptyEl.hidden = false;
+    }
+    if (bodyEl) {
+      bodyEl.innerHTML = '';
+    }
     if (statusEl) {
       statusEl.textContent = 'Ошибка в загрузке заявок.';
     }
   }
 }
 
-loadRequests();
+// Инициализация
+void loadRequests();
