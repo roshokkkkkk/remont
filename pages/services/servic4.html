@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,12 @@
 </head>
 <body>
     <div class="list">
-        <div class="spisok">
+        <div class="burger-menu" id="burger-menu" role="button" aria-label="Меню" aria-controls="service-menu" aria-expanded="false" tabindex="0">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="spisok" id="service-menu">
             <h3 class="title-list">Услуги</h4>
 
             <dl>
@@ -34,10 +39,10 @@
                 <li><a href="/pages/services/servic19.html">Установка дверей</a></li>
             </dl>
         </div>
-        <a href="/index.html" class="button">Главная</a>
         <div class="wrp-text">
-            <div class="title-servic">
+            <div class="title-servic title-servic--main-btn">
                 <h2 class="title">Дизайн интерьера</h2>
+                <a href="/index.html" class="button">Главная</a>
             </div>
 
             <div class="wrp-top">
@@ -121,18 +126,6 @@
         </div>
 
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const menuLinks = document.querySelectorAll('.spisok a');
-            const currentPath = window.location.pathname;
-
-            menuLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPath) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
 </body>
 </html>
 

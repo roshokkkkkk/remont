@@ -124,6 +124,25 @@ li:hover{
     padding-top: 15px;
 }
 
+.title-servic--main-btn{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.title-servic--main-btn .title{
+    flex: 1;
+    margin: 0;
+    text-align: center;
+}
+
+.title-servic--main-btn .button{
+    position: static;
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+
 .title-example{
     text-align: center;
     padding-bottom: 15px;
@@ -189,12 +208,13 @@ li:hover{
 .button{
     display: inline-block;
     padding: 15px;
-    position: absolute;
-    margin-left: 92.9%;
     border: 1px solid #FF8C00;
     color: #FF8C00;
     text-transform: uppercase;
     font-family: HammersmithOne;
     font-size: 16px;
     border-radius: 2px;  
+    position: static;
+    margin-left: auto;
+    margin-right: 30px;
 }
