@@ -1,11 +1,33 @@
 const express = require('express');
+const session = require('express-session'); 
 const mysql = require('mysql2/promise');
 const path = require('path');
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
+
 const pagesDir = path.join(__dirname, 'pages');
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'dev-secret-change-me-in-prod',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, 
+    httpOnly: true,              
+    secure: false,               
+    sameSite: 'lax'             
+  }
+}));
+
+const requireAuth = (req, res, next) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ error: 'auth_required', message: 'Требуется авторизация' });
+  }
+  next();
+};
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
@@ -27,6 +49,7 @@ function isEmailValid(value) {
 }
 
 const allowedStatuses = new Set(['new', 'viewed', 'in_work', 'ready']);
+
 
 app.post('/api/requests', async (req, res) => {
   const fullName = asTrimmedString(req.body?.full_name);
@@ -79,7 +102,7 @@ app.get('/api/requests', async (req, res) => {
   }
 });
 
-app.put('/api/requests/:id/status', async (req, res) => {
+app.put('/api/requests/:id/status', requireAuth, async (req, res) => { // 👈 защищено
   const id = Number(req.params.id);
   const status = asTrimmedString(req.body?.status);
 
@@ -108,6 +131,69 @@ app.put('/api/requests/:id/status', async (req, res) => {
   }
 });
 
+app.post('/api/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'validation_error', message: 'username and password required' });
+  }
+
+  try {
+    const [rows] = await pool.query(
+      'SELECT id, username, password FROM users WHERE username = ? LIMIT 1',
+      [username]
+    );
+
+    const user = rows[0];
+    if (!user || user.password !== password) {
+      return res.status(401).json({ error: 'invalid_credentials' });
+    }
+
+    req.session.regenerate((err) => {
+      if (err) {
+        console.error('Session regeneration error:', err);
+        return res.status(500).json({ error: 'session_error' });
+      }
+
+      req.session.userId = user.id;
+      req.session.username = user.username;
+      req.session.loginTime = new Date().toISOString();
+
+      res.json({
+        success: true,
+        user: { id: user.id, username: user.username },
+        message: 'Успешный вход'
+      });
+    });
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ error: 'db_error' });
+  }
+});
+
+app.get('/api/session', (req, res) => {
+  res.json({
+    isAuthenticated: !!req.session.userId,
+    user: req.session.userId ? {
+      id: req.session.userId,
+      username: req.session.username
+    } : null,
+    sessionId: req.sessionID,
+    expiresAt: req.session.cookie.expires
+  });
+});
+
+app.post('/api/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Logout error:', err);
+      return res.status(500).json({ error: 'logout_failed' });
+    }
+    res.clearCookie('connect.sid'); // имя cookie по умолчанию
+    res.json({ success: true, message: 'Выход выполнен' });
+  });
+});
+
 const pageRoutes = ['about', 'team', 'works', 'review', 'contacts', 'admin'];
 
 app.get('/', (req, res) => {
@@ -119,15 +205,27 @@ app.get('/index.html', (req, res) => {
 });
 
 for (const page of pageRoutes) {
-  app.get(`/${page}.html`, (req, res) => {
-    res.sendFile(path.join(pagesDir, `${page}.html`));
-  });
+  // 👈 admin.html защищаем проверкой сессии
+  if (page === 'admin') {
+    app.get(`/${page}.html`, (req, res, next) => {
+      if (!req.session.userId) {
+        // Перенаправляем на вход или показываем 403
+        return res.status(403).sendFile(path.join(pagesDir, 'auth-required.html')) || 
+               res.status(403).json({ error: 'access_denied' });
+      }
+      res.sendFile(path.join(pagesDir, `${page}.html`));
+    });
+  } else {
+    app.get(`/${page}.html`, (req, res) => {
+      res.sendFile(path.join(pagesDir, `${page}.html`));
+    });
+  }
 }
 
 app.use(express.static(path.join(__dirname), { dotfiles: 'ignore' }));
 
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`🚀 Server running on http://localhost:${port}`);
+  console.log(`⏱ Sessions: 24 hours`);
 });
-

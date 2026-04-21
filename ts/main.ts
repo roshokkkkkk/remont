@@ -1,3 +1,4 @@
+import '../css/css.css';
 document.addEventListener('DOMContentLoaded', () => {
   const menu = document.querySelector('.menu') as HTMLElement | null;
   const burger = document.getElementById('burger-menu') as HTMLButtonElement | null;
