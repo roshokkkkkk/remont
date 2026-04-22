@@ -1,7 +1,9 @@
 *{
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
-.header-reg{
+body{
     background-image: url(/img/fons/overlay3.png), url(/img/fons/header.png);
     background-size: cover;
      
@@ -31,7 +33,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 70px;
     
 }
 
@@ -62,7 +64,7 @@
 }
 
 .input-reg{
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     width: 350px;
     height: 35px;
     align-items: center;
@@ -86,6 +88,7 @@
 
 .avt{
     display: flex;
+    padding-top: 20px;
     align-items: center;
     justify-content: center;
     margin: auto;

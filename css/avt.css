@@ -1,8 +1,10 @@
 *{
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.avt-wrp{
+body{
     background-image: url(/img/fons/overlay3.png), url(/img/fons/header.png);
     background-size: cover;
 }
@@ -57,7 +59,7 @@
 .input-avt{
     width: 300px;
     height: 35px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     
 }
 
@@ -66,6 +68,7 @@
     align-items: center;
     justify-content: center;
     margin: auto;
+    margin-top: 15px
 }
 
 .ssylka{
