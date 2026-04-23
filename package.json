@@ -14,11 +14,11 @@
     "express-session": "^1.19.0",
     "mysql2": "^3.11.0"
   },
-  "description": "",
+  "description": "npm init -y \r npm install -D vite typescript",
   "main": "server.js",
   "devDependencies": {
     "typescript": "^6.0.3",
-    "vite": "^8.0.9"
+    "vite": "^8.0.10"
   },
   "repository": {
     "type": "git",
@@ -30,5 +30,6 @@
   "bugs": {
     "url": "https://github.com/roshokkkkkk/remont/issues"
   },
-  "homepage": "https://github.com/roshokkkkkk/remont#readme"
+  "homepage": "https://github.com/roshokkkkkk/remont#readme",
+  "type": "commonjs"
 }

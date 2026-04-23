@@ -332,7 +332,7 @@ a:hover{
     background-color: white;
     border-radius: 2px;
 }
-@media(max-width: 768px){
+@media(max-width: 1050px){
     .menu {
         display: none;
       
@@ -358,7 +358,7 @@ a:hover{
     }
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: 1051px) {
     .menu {
         display: flex;
     }
