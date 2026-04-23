@@ -1,0 +1,220 @@
+@font-face {
+    src: url(/client/fonts/HammersmithOne-Regular.ttf);
+    font-family: HammersmithOne;
+}
+
+@font-face {
+    src: url(/client/fonts/Roboto-Thin.ttf);
+    font-family: Roboto;
+    font-weight: 100;
+}
+
+@font-face {
+    src: url(/client/fonts/Roboto-Light.ttf);
+    font-family: Roboto;
+    font-weight: 200;
+}
+
+@font-face {
+    src: url(/client/fonts/Roboto-Black.ttf);
+    font-family: Roboto;
+    font-weight: 800;
+}
+
+@font-face {
+    src: url(/client/fonts/PlayfairDisplay-Black.ttf);
+    font-family: Playfair;
+    font-weight: 900;
+}
+
+@font-face {
+    src: url(/client/fonts/PlayfairDisplay-Bold.ttf);
+    font-family: Playfair;
+    font-weight: 700;
+}
+
+@font-face {
+    src: url(/client/fonts/PlayfairDisplay-Regular.ttf);
+    font-family: Playfair;
+    font-weight: 400;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+/*
+body{
+    background-image: url(/img/fons/overlay3.png);
+}
+*/
+.list{
+    display: flex;
+}
+
+.spisok{
+    width: 20%;
+    border: 2px solid #888888;
+}
+
+.title-list{
+    height: 30px;
+    text-align: left;
+    padding-left: 50px;
+    background-color: #fab24d;
+    border: 1px solid #d6d4d43d;
+}
+
+li{
+    text-align: left;
+    padding-left: 40px;
+    padding-top: 15px;
+    border: 1px solid #d6d4d43d;
+    font-family: Playfair;
+    color: #2f2d35;
+    font-weight: 300;
+    line-height: 24px;
+    color: #413d4b;
+    line-height: 1,8px;
+    cursor: pointer;
+}
+
+a{
+    text-decoration: none;
+    color: #1f1f1f;
+}
+
+a:hover{
+    color: #d6820c;
+}
+
+li:hover{
+    text-decoration: underline;
+}
+
+.wrp-top{
+    display: flex;
+}
+
+.image-servic{
+    height: 250px;
+    width: 250px;
+    margin-left: 30px;
+    border: 5px solid #fab24d;
+    border-radius: 10px;
+}
+
+.wrp-text{
+    display: flex;
+    flex-direction: column;
+}
+
+.aaa{
+    text-decoration: underline;
+    font-size: 18px;
+    padding-top: 7px;
+    margin-left: 5px;
+    color: rgb(13, 5, 81);
+    height: 50px;
+}
+
+.title{
+    text-align: center;
+    padding-bottom: 30px;
+    padding-top: 15px;
+}
+
+.title-servic--main-btn{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.title-servic--main-btn .title{
+    flex: 1;
+    margin: 0;
+    text-align: center;
+}
+
+.title-servic--main-btn .button{
+    position: static;
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+
+.title-example{
+    text-align: center;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.text-right{
+    height: 250px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.text-top{
+    text-indent: 25px;
+    font-family: Playfair;
+    color: #1f1f1f;
+    text-align: justify;
+    font-weight: 300;
+    line-height: 24px;
+    text-align: justify;
+    line-height: 1,8px;
+}
+
+.wrapper{
+    height: 250px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+}
+
+.description{
+    font-family: Playfair;
+    color: #1f1f1f;
+    text-align: justify;
+    font-weight: 300;
+    line-height: 24px;
+    text-align: justify;
+    line-height: 1,8px;
+    text-indent: 25px;
+}
+
+.examples{
+    display: flex;
+    flex-direction: column;
+}
+
+.wrp-image{
+    display: flex;
+    justify-content: space-between;
+}
+
+.img{
+    width: 300px;
+    height: 300px;
+    border: 3px solid #373737;
+}
+
+/* для ссылок */
+.spisok li a.active {
+    color: #d6820c;
+}
+
+.button{
+    display: inline-block;
+    padding: 15px;
+    border: 1px solid #FF8C00;
+    color: #FF8C00;
+    text-transform: uppercase;
+    font-family: HammersmithOne;
+    font-size: 16px;
+    border-radius: 2px;  
+    position: static;
+    margin-left: auto;
+    margin-right: 30px;
+}
