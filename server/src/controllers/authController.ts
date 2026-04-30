@@ -1,7 +1,18 @@
 import { Request, Response } from 'express';
 import { pool } from '../config/database';
 
-const HARDCODED_USER = { username: 'admin', password: 'skebob', id: 1 };
+const DEV_ADMIN_USER = { username: 'admin', password: 'skebob', id: 1 };
+
+const getConfiguredAdmin = () => {
+  const username = process.env.ADMIN_USERNAME?.trim();
+  const password = process.env.ADMIN_PASSWORD?.trim();
+
+  if (username && password) {
+    return { username, password, id: 1 };
+  }
+
+  return process.env.NODE_ENV === 'production' ? null : DEV_ADMIN_USER;
+};
 
 export const login = async (req: Request, res: Response) => {
   const username = (req.body?.username || '').toString().trim();
@@ -11,8 +22,9 @@ export const login = async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'validation_error', message: 'username and password required' });
   }
 
-  if (username === HARDCODED_USER.username && password === HARDCODED_USER.password) {
-    return regenerateAndRespond(req, res, HARDCODED_USER);
+  const configuredAdmin = getConfiguredAdmin();
+  if (configuredAdmin && username === configuredAdmin.username && password === configuredAdmin.password) {
+    return regenerateAndRespond(req, res, configuredAdmin);
   }
 
   try {
@@ -47,7 +59,7 @@ const regenerateAndRespond = (req: Request, res: Response, user: any) => {
     res.json({
       success: true,
       user: { id: user.id, username: user.username },
-      message: 'Успешный вход'
+      message: 'Login successful'
     });
   });
 };
@@ -69,7 +81,8 @@ export const logout = (req: Request, res: Response) => {
       console.error('Logout error:', err);
       return res.status(500).json({ error: 'logout_failed' });
     }
+
     res.clearCookie('connect.sid');
-    res.json({ success: true, message: 'Выход выполнен' });
+    res.json({ success: true, message: 'Logout successful' });
   });
 };

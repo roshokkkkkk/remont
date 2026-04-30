@@ -53,7 +53,7 @@ export const getRequests = async (req: Request, res: Response) => {
     const [rows]: any = await pool.query(
       'SELECT id, full_name, email, address, details, status, created_at FROM repair_requests ORDER BY created_at DESC'
     );
-    res.json({  rows });
+    res.json({ data: rows });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'db_error' });

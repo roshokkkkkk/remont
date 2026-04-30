@@ -5,7 +5,7 @@ import { requireAuth } from '../middleware/auth';
 const router = Router();
 
 router.post('/', createRequest);
-router.get('/', getRequests);
+router.get('/', requireAuth, getRequests);
 router.put('/:id/status', requireAuth, updateStatus);
 
 export default router;

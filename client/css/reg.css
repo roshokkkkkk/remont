@@ -4,7 +4,7 @@
     padding: 0;
 }
 body{
-    background-image: url(/client/img/fons/overlay3.png), url(/img/fons/header.png);
+    background-image: url(/img/fons/overlay3.png), url(/img/fons/header.png);
     background-size: cover;
      
 }
