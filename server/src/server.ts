@@ -4,8 +4,39 @@ import path from 'path';
 import { sessionConfig } from './config/session';
 import authRoutes from './routes/authRoutes';
 import requestRoutes from './routes/requestRoutes';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
 
 const app = express();
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Remont API',
+      version: '1.0.0',
+      description: 'REST API для веб-приложения Remont',
+    },
+    servers: [{ url: `http://localhost:${process.env.PORT || 3000}/api` }],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+  },
+  apis: ['./src/routes/*.ts'],
+};
+
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+
+// Подключаем Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get('/api/openapi.json', (req, res) => res.json(swaggerSpec));
+
 const projectRoot = path.resolve(__dirname, '../..');
 const clientDir = path.join(projectRoot, 'client');
 const pagesDir = path.join(clientDir, 'pages');

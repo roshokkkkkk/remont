@@ -12,7 +12,9 @@
     "dotenv": "^16.6.1",
     "express": "^4.22.1",
     "express-session": "^1.19.0",
-    "mysql2": "^3.22.2"
+    "mysql2": "^3.22.2",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1"
   },
   "description": "npm init -y \r npm install -D vite typescript",
   "main": "server.js",
@@ -20,6 +22,8 @@
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.19.0",
     "@types/node": "^25.6.0",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "concurrently": "^9.2.1",
     "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",
